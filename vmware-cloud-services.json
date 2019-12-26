@@ -1,0 +1,3956 @@
+﻿{
+    "swagger": "2.0",
+    "info": {
+        "description": "A list of all public APIs",
+        "version": "1.0.0",
+        "title": "Cloud Services Platform API Documentation Center"
+    },
+    "basePath": "/csp/gateway",
+    "tags": [
+        {
+            "name": "Terms Of Service",
+            "description": "Terms Of Service Operations"
+        },
+        {
+            "name": "Service Metadata",
+            "description": "Service Metadata Operations"
+        },
+        {
+            "name": "Service Definition",
+            "description": "Service Definition Operations"
+        },
+        {
+            "name": "Principal User",
+            "description": "Principal User Operations"
+        },
+        {
+            "name": "Login",
+            "description": "Login Operations"
+        },
+        {
+            "name": "Service invitation",
+            "description": "Invitation to Service Actions"
+        },
+        {
+            "name": "Users",
+            "description": "Users Operations"
+        },
+        {
+            "name": "OAuth Client",
+            "description": "OAuth Client operations"
+        },
+        {
+            "name": "Registered Services",
+            "description": "Registered Services Operations"
+        },
+        {
+            "name": "IDP Organization",
+            "description": "IDP Organization Operations"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication Operations"
+        },
+        {
+            "name": "Organizations",
+            "description": "Organizations Operations"
+        },
+        {
+            "name": "IDP Authentication",
+            "description": "IDP Authentication Operations"
+        }
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "paths": {
+        "/am/api/tos/signatures": {
+            "get": {
+                "tags": [
+                    "Terms Of Service"
+                ],
+                "summary": "Get terms of service signatures",
+                "operationId": "getTosSignatures",
+                "parameters": [
+                    {
+                        "name": "orgLink",
+                        "in": "query",
+                        "description": "Org Link",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "orgLink"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email address",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "email"
+                    },
+                    {
+                        "name": "displayName",
+                        "in": "query",
+                        "description": "Signee display name",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "displayName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/TosSignaturePaginatedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "No Tos signatures found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Terms Of Service"
+                ],
+                "summary": "Sign terms of service",
+                "operationId": "signTos",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/TosSignatureRequest"
+                        },
+                        "definition": "TosSignatureRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/am/api/tos/signatures/{signatureId}": {
+            "get": {
+                "tags": [
+                    "Terms Of Service"
+                ],
+                "summary": "Get terms of service signature",
+                "operationId": "getTosSignature",
+                "parameters": [
+                    {
+                        "name": "signatureId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "signatureId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/TosSignatureResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Tos signature not found"
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get external service definition",
+                "operationId": "getExternalServiceDefinition",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ExternalServiceDefinitionDTO"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Update external service definition",
+                "operationId": "replaceExternalServiceDefinitionFields",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceDefinitionUpdateRequest"
+                        },
+                        "definition": "ServiceDefinitionUpdateRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get all service definitions",
+                "operationId": "getAllServiceDefinitions",
+                "parameters": [
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    },
+                    {
+                        "name": "orgLink",
+                        "in": "query",
+                        "description": "Organization link",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "orgLink"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AllServiceDefinitionsResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Create service definition",
+                "operationId": "createServiceDefinitionFromYaml",
+                "consumes": [
+                    "text/plain"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "YAML",
+                        "description": "A YAML (as plain text) Representing the Service Definition",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "controlName": "YAML"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/service-roles/{roleId}": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get service role",
+                "operationId": "getExternalServiceRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "roleId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRoleDto"
+                        }
+                    },
+                    "500": {
+                        "description": "Service Role not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Delete service role",
+                "operationId": "removeExternalServiceRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "roleId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Service Role not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Update service roles fields",
+                "operationId": "updateExternalServiceRoles",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "roleId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRoleUpdateDto"
+                        },
+                        "definition": "ServiceRoleUpdateDto",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "404": {
+                        "description": "Service Role not found"
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/service-roles": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get service roles links",
+                "operationId": "getExternalServiceRoles",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expanded service role dto",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRolesResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Service Role not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Create service role",
+                "operationId": "createExternalServiceRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Service Role object to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRole"
+                        },
+                        "definition": "ServiceRole",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service Role created",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "409": {
+                        "description": "Service Role already exists"
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/service-role-removal-tasks/{taskId}": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get service role removal task",
+                "operationId": "getServiceRoleRemovalTaskState",
+                "parameters": [
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "taskId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRoleDeletionTaskResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/export": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Export external service definition",
+                "operationId": "exportExternalServiceDefinition",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/instances": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get all external service definition instances",
+                "operationId": "getExternalServiceDefinitionInstances",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinksDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/orgs": {
+            "get": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Get all organizations for a service definition",
+                "operationId": "getServiceDefinitionOrganizations",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinksDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/orgs/{orgId}/metadata": {
+            "get": {
+                "tags": [
+                    "Service Metadata"
+                ],
+                "summary": "Get the service organization metadata",
+                "operationId": "getServiceMetadata",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Service Metadata"
+                ],
+                "summary": "Create the service organization metadata",
+                "operationId": "createServiceMetadata",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Service organization metadata",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object"
+                            }
+                        },
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Service Metadata"
+                ],
+                "summary": "Delete the service organization metadata",
+                "operationId": "deleteServiceMetadata",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Service Metadata"
+                ],
+                "summary": "Update the service organization metadata",
+                "description": "Options:\n1. Adding new entries to the metadata by specifying new key-value pairs.\n2. Overriding existing entries by specifying an existing key with a new value.\n3. Removing existing entries by specifying an existing key with null value.",
+                "operationId": "updateServiceMetadata",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Service organization metadata",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object"
+                            }
+                        },
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/metadata": {
+            "get": {
+                "tags": [
+                    "Service Metadata"
+                ],
+                "summary": "Get all service organizations metadata",
+                "description": "Options:\n 1. Get all service organizations metadata.\n2. Get all service organizations metadata that contains the specified key in the query parameter.",
+                "operationId": "getAllServiceMetadata",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "metadata key",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "key"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max number of records per page",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "limit"
+                    },
+                    {
+                        "name": "page-token",
+                        "in": "query",
+                        "description": "Next/prev page token",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "page-token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceMetadataPaginatedResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/definitions/external/{id}/service-urls": {
+            "patch": {
+                "tags": [
+                    "Service Definition"
+                ],
+                "summary": "Update service urls",
+                "description": "Options:\n1. Setting new service urls.\n2. Overriding existing urls by specifying an existing field with a new value.\n3. Removing existing urls by specifying an existing field with 'null' string as value.",
+                "operationId": "updateServiceUrls",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "id"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceUrls"
+                        },
+                        "definition": "ServiceUrls",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceUrlsDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user/default-org": {
+            "get": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Get default organization for principal user",
+                "operationId": "getDefaultOrg",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated User"
+                    },
+                    "500": {
+                        "description": "Failed to get default organization"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Set default organization for principal user",
+                "operationId": "setDefaultOrg",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        },
+                        "definition": "RefLinkDto",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Organization reference link is mandatory"
+                    },
+                    "401": {
+                        "description": "Unauthenticated User"
+                    },
+                    "500": {
+                        "description": "Failed to set default organization"
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user": {
+            "get": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Get principal user by access token",
+                "operationId": "getLoggedinUser",
+                "parameters": [
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    },
+                    "404": {
+                        "description": "No user with given token exists"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Update principal user",
+                "operationId": "patchLoggedInUser",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "definition": "User",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User updated",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user/orgs": {
+            "get": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Get principal user's organizations",
+                "operationId": "getLoggedinUserOrgs",
+                "parameters": [
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Organizations"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    },
+                    "404": {
+                        "description": "No user with given token exists"
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user/orgs/{orgId}/roles": {
+            "get": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Get principal user roles within the specified organization",
+                "operationId": "getLoggedInUserRolesOnOrg",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                                "$ref": "#/definitions/RoleDto"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user/orgs/{orgId}/service-roles": {
+            "get": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Get principal user service roles within the specified organization",
+                "operationId": "getLoggedInUserServiceRolesOnOrg",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "serviceDefinitionLink",
+                        "in": "query",
+                        "description": "Service Definition Link",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "serviceDefinitionLink"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/UserServiceRolesResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user/access-keys": {
+            "post": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Generate access key for principal user",
+                "operationId": "generateUserAccessKey",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AccessKey"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    },
+                    "404": {
+                        "description": "No user with given token exists"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Delete access key for principal user",
+                "operationId": "deleteLoggedInUserAccessKey",
+                "parameters": [],
+                "responses": {
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    },
+                    "404": {
+                        "description": "No user with given token exists"
+                    }
+                }
+            }
+        },
+        "/am/api/loggedin/user/orgs/{orgId}/info": {
+            "get": {
+                "tags": [
+                    "Principal User"
+                ],
+                "summary": "Get principal user info and roles by organization",
+                "operationId": "getLoggedInUserInfo",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/UserInfo"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid 'token' request parameter"
+                    }
+                }
+            }
+        },
+        "/am/api/login/oauth": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Exchange client credentials to access token",
+                "description": "The end-point is for exchanging client credentials to access token.\n Include the client_credentials grant type parameter using the application/x-www-form-urlencoded format in the HTTP request body",
+                "operationId": "getTokenForClientCredentialsGrantType",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "grant_type",
+                        "in": "formData",
+                        "description": "User's auth grant type",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "client_credentials"
+                        ],
+                        "controlName": "grant_type"
+                    },
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "Basic Base64_Encode(client_id:client_secret)",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "authorization"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Access token retrieved successfully",
+                        "schema": {
+                            "$ref": "#/definitions/AccessToken"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/slc/api/service-invitations/{serviceInvitationId}": {
+            "get": {
+                "tags": [
+                    "Service invitation"
+                ],
+                "summary": "Get Service Invitation details",
+                "operationId": "getServiceInvitationInfo",
+                "parameters": [
+                    {
+                        "name": "serviceInvitationId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "serviceInvitationId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceInvitationResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/slc/api/service-invitations": {
+            "post": {
+                "tags": [
+                    "Service invitation"
+                ],
+                "summary": "Service invitation",
+                "operationId": "createServiceInvitations",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Service Invitation Request"
+                        },
+                        "definition": "ServiceInvitationRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinksDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/am/api/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create new user in DI (not supported over GAZ)",
+                "operationId": "createUser",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "definition": "User",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "405": {
+                        "description": "Not supported over GAZ"
+                    },
+                    "409": {
+                        "description": "Username already exists"
+                    }
+                }
+            }
+        },
+        "/am/api/users/{userId}/orgs/{orgId}/roles": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user roles in organization",
+                "operationId": "getUserRolesOnOrg",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "userId"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                                "$ref": "#/definitions/RoleDto"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user roles for role names in organization",
+                "operationId": "patchUserRolesByNames",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "userId"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserRolesUpdateRequest"
+                        },
+                        "definition": "UserRolesUpdateRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User roles updated"
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/am/api/users/{userId}/orgs/{orgId}/service-roles": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user service roles in organization",
+                "operationId": "getUserServiceRolesOnOrg",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "userId"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "serviceDefinitionLink",
+                        "in": "query",
+                        "description": "Service Definition Link",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "serviceDefinitionLink"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/UserServiceRolesResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user service roles in organization",
+                "operationId": "patchUserServiceRoles",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "userId"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserServiceRolesUpdateRequest"
+                        },
+                        "definition": "UserServiceRolesUpdateRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User service roles updated"
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/am/api/users/{username}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user",
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "username"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete an existing user in DI (not supported over GAZ)",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "username"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update an existing user",
+                "operationId": "patchUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "username"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "definition": "User",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User updated",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/am/api/users/{username}/orgs": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user organizations",
+                "operationId": "getUserOrgs",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "username"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinksDto"
+                        }
+                    },
+                    "404": {
+                        "description": "User does not exist"
+                    }
+                }
+            }
+        },
+        "/am/api/users/{username}/access-keys": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user access key",
+                "operationId": "deleteUserAccessKey",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "username"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/am/api/users/{userId}/orgs/{orgId}/info": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user info in organization",
+                "operationId": "getUserInfo",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "userId"
+                    },
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/UserInfo"
+                        }
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            }
+        },
+        "/am/api/services/clients/{clientId}": {
+            "get": {
+                "tags": [
+                    "OAuth Client"
+                ],
+                "summary": "Get OAuth client",
+                "operationId": "getOauthClient",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "clientId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AuthClient"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "OAuth Client"
+                ],
+                "summary": "Delete OAuth client",
+                "operationId": "deleteOauthClient",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "clientId"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/am/api/services/clients": {
+            "post": {
+                "tags": [
+                    "OAuth Client"
+                ],
+                "summary": "Create service OAuth client",
+                "operationId": "createServiceOauthClient",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AuthClient"
+                        },
+                        "definition": "AuthClient",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AuthClient"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "OAuth Client"
+                ],
+                "summary": "Patch OAuth clients",
+                "operationId": "patchOauthClientsAllowedScopes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateClientsScopesRequest"
+                        },
+                        "definition": "UpdateClientsScopesRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/slc/api/registered-services/{serviceId}": {
+            "get": {
+                "tags": [
+                    "Registered Services"
+                ],
+                "summary": "Get registered service",
+                "operationId": "getRegisteredService",
+                "parameters": [
+                    {
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "serviceId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RegisteredServiceRecordResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown Service"
+                    }
+                }
+            }
+        },
+        "/slc/api/registered-services": {
+            "get": {
+                "tags": [
+                    "Registered Services"
+                ],
+                "summary": "Get all registered services",
+                "operationId": "getServices",
+                "parameters": [
+                    {
+                        "name": "serviceDefinitionLink",
+                        "in": "query",
+                        "description": "serviceDefinitionLink",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "serviceDefinitionLink"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinksDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/am/idp/orgs/{orgId}": {
+            "get": {
+                "tags": [
+                    "IDP Organization"
+                ],
+                "summary": "Get IDP Organization",
+                "operationId": "getOrganization",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/IDPOrganization"
+                        }
+                    }
+                }
+            }
+        },
+        "/am/api/auth/token-public-key": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Retrieve the public key to be used for verifying the idp generated tokens signature",
+                "operationId": "getIdpPublicKey",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/PublicKeyDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/am/api/auth/login/accounts/access-keys": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Exchange user access key to user access token",
+                "operationId": "logInUserAccessKey",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AccessKey"
+                        },
+                        "definition": "AccessKey",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                    },
+                    "401": {
+                        "description": "Failed authentication"
+                    }
+                }
+            }
+        },
+        "/am/api/auth/token": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Exchange authorization code to user access token",
+                "operationId": "oldGetTokenForAuthCode",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "User's auth code",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "code"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "Request state parameter",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "state"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "query",
+                        "description": "Service client ID",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "client_id"
+                    },
+                    {
+                        "name": "client_secret",
+                        "in": "query",
+                        "description": "Service client secret",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "client_secret"
+                    },
+                    {
+                        "name": "redirect_uri",
+                        "in": "query",
+                        "description": "Service redirect uri",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "redirect_uri"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "deprecated": true
+            },
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Exchange Authentication Code to user token",
+                "operationId": "getTokenForAuthCode",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "User's auth code",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "code"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "Request state parameter",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "state"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "query",
+                        "description": "Service client ID",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "client_id"
+                    },
+                    {
+                        "name": "client_secret",
+                        "in": "query",
+                        "description": "Service client secret",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "client_secret"
+                    },
+                    {
+                        "name": "redirect_uri",
+                        "in": "query",
+                        "description": "Service redirect uri",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "redirect_uri"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/am/api/auth/authorize": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Exchange authorization code, refresh token or client_credentials to user access token",
+                "description": "This end-point exchange authorization code, refresh token or client_credentials to user access token.\n1. Include the parameters using application/x-www-form-urlencoded format in the HTTP request body.\n2. Include Basic Base64_Encode(client_id:client_secret) value in the HTTP authorization header.\n3. DEPRECATED: Passing query parameters\n",
+                "operationId": "getTokenForAuthGrantType",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "Basic auth client credentials [Basic Base64_Encode(client_id:client_secret)]",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "authorization"
+                    },
+                    {
+                        "name": "grant_type",
+                        "in": "formData",
+                        "description": "User's auth grant type",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "authorization_code",
+                            "refresh_token",
+                            "client_credentials"
+                        ],
+                        "controlName": "grant_type"
+                    },
+                    {
+                        "name": "refresh_token",
+                        "in": "formData",
+                        "description": "Refresh token parameter for grant_type=refresh_token",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "refresh_token"
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "Auth code parameter for grant_type=authorization_code",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "code"
+                    },
+                    {
+                        "name": "state",
+                        "in": "formData",
+                        "description": "Request state parameter for grant_type=authorization_code",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "state"
+                    },
+                    {
+                        "name": "redirect_uri",
+                        "in": "formData",
+                        "description": "Service redirect uri for grant_type=authorization_code",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "redirect_uri"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AccessToken"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/am/api/auth/logout": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Redirect to user idp logout page and then redirect to discovery page",
+                "operationId": "oldLogout",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "User token",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "token"
+                    }
+                ],
+                "responses": {
+                    "307": {
+                        "description": "Redirect to IDP logout"
+                    }
+                },
+                "deprecated": true
+            },
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Return idp logout url",
+                "description": "This end point return the idp logout url.\nIn order to logout, an explicit redirect to this url is needed",
+                "operationId": "newLogout",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/IdTokenDto"
+                        },
+                        "definition": "IdTokenDto",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/UrlResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/am/api/auth/api-tokens/authorize": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Exchange org scoped refresh token to user access token",
+                "description": "The end-point is for exchanging org scoped refresh-tokens only, that are obtained from the CSP UI.\n1. Including the refresh token parameter using the application/x-www-form-urlencoded format in the HTTP request body.\n2. DEPRECATED: Passing the refresh token via query param.",
+                "operationId": "getAccessTokenByApiRefreshToken",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "refresh_token",
+                        "in": "formData",
+                        "description": "refresh_token value",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "refresh_token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AccessToken"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/am/api/orgs": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get all organizations",
+                "operationId": "getOrgs",
+                "parameters": [
+                    {
+                        "name": "noTos",
+                        "in": "query",
+                        "description": "Should filter orgs list by orgs that have not signed TOS (true/false)",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "noTos"
+                    },
+                    {
+                        "name": "org-name",
+                        "in": "query",
+                        "description": "Org name to filter by (deprecated)",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "org-name"
+                    },
+                    {
+                        "name": "orgName",
+                        "in": "query",
+                        "description": "Org name to filter by",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "orgName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinksDto"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Create organization",
+                "operationId": "createOrg",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OrganizationCreationRequest"
+                        },
+                        "definition": "OrganizationCreationRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/am/api/orgs/{orgId}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get organization",
+                "operationId": "getOrg",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Organization"
+                        }
+                    },
+                    "404": {
+                        "description": "Org not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Update organization",
+                "operationId": "patchOrg",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Organization"
+                        },
+                        "definition": "Organization",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/RefLinkDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "404": {
+                        "description": "Org not found"
+                    }
+                }
+            }
+        },
+        "/am/api/orgs/{orgId}/users": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get Org's users",
+                "operationId": "getOrgUsers",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    },
+                    "404": {
+                        "description": "Org not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Remove users from organization",
+                "operationId": "removeUserFromOrg",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RemoveUserFromOrgRequest"
+                        },
+                        "definition": "RemoveUserFromOrgRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateOrgUsernamesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "Org not found"
+                    }
+                }
+            }
+        },
+        "/am/api/orgs/{orgId}/roles": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get organization's roles",
+                "operationId": "getOrgRoles",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Role names (or comma separated list of role names)",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "name"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/OrgRolesResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Org not found"
+                    }
+                }
+            }
+        },
+        "/am/api/orgs/{orgId}/invitations": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get invitations for organization",
+                "operationId": "getOrgInvitations",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "string",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User Invitation Response"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Create/revoke organization user invitation",
+                "description": "This end point invites users to an organization.\nNote: When passing the action query param with value revoke the invitations for the given usernames will be revoked",
+                "operationId": "inviteUsers",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Users Invitation Request"
+                        },
+                        "definition": "UsersInvitationRequest",
+                        "type": "object",
+                        "controlName": "body"
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "description": "When set as 'revoke', the invitations for the given usernames will be revoked",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "revoke"
+                        ],
+                        "controlName": "action"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid request body"
+                    },
+                    "404": {
+                        "description": "Organization not found"
+                    }
+                }
+            }
+        },
+        "/am/api/orgs/invitations/{username}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get all user invitations",
+                "operationId": "getAllInvitationsForUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "username"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "description": "Expand details",
+                        "required": false,
+                        "type": "boolean",
+                        "controlName": "expand"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User Invitation Response"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/am/api/orgs/{orgId}/invitations/{user-invitation-id}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get user invitation by id",
+                "operationId": "getUserInvitation",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "user-invitation-id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "user-invitation-id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/User Invitation Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Revoke user invitation",
+                "operationId": "revokeUserInvitation",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "orgId"
+                    },
+                    {
+                        "name": "user-invitation-id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "controlName": "user-invitation-id"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/am/idp/auth/token-public-key": {
+            "get": {
+                "tags": [
+                    "IDP Authentication"
+                ],
+                "summary": "Retrieve the public key to be used for verifying the IdP generated tokens signature.",
+                "operationId": "getIdpPublicKey",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/PublicKeyDto"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "apiKey": {
+            "type": "apiKey",
+            "name": "csp-auth-token",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "TosSignaturePaginatedResponse": {
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TosSignatureResponse"
+                    }
+                },
+                "nextToken": {
+                    "type": "string"
+                },
+                "prevToken": {
+                    "type": "string"
+                },
+                "totalResults": {
+                    "type": "string"
+                }
+            }
+        },
+        "TosSignatureResponse": {
+            "type": "object",
+            "required": [
+                "clientUtcTimestamp",
+                "displayName",
+                "email",
+                "orgLink"
+            ],
+            "properties": {
+                "displayName": {
+                    "type": "string",
+                    "description": "Signee full name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Signee email"
+                },
+                "orgLink": {
+                    "type": "string",
+                    "description": "Organization Link"
+                },
+                "clientUtcTimestamp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Client side timestamp of signature"
+                },
+                "serverUtcTimestamp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Server side timestamp of signature"
+                }
+            }
+        },
+        "RefLinkDto": {
+            "type": "object",
+            "properties": {
+                "refLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "TosSignatureRequest": {
+            "type": "object",
+            "required": [
+                "clientUtcTimestamp",
+                "displayName",
+                "email",
+                "orgLink"
+            ],
+            "properties": {
+                "displayName": {
+                    "type": "string",
+                    "description": "Signee full name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Signee email"
+                },
+                "orgLink": {
+                    "type": "string",
+                    "description": "Organization Link"
+                },
+                "clientUtcTimestamp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Client side timestamp of signature"
+                }
+            }
+        },
+        "ExternalServiceDefinitionDTO": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The service name"
+                },
+                "displayName": {
+                    "type": "string",
+                    "description": "The service display name"
+                },
+                "descriptionShort": {
+                    "type": "string",
+                    "description": "The service short description"
+                },
+                "descriptionLong": {
+                    "type": "string",
+                    "description": "The service long description"
+                },
+                "productIdentifier": {
+                    "type": "string",
+                    "description": "The product identifier in the Billing Provider"
+                },
+                "internal": {
+                    "type": "boolean",
+                    "description": "Specify whether the service is internal - provisioned by CSP, or external"
+                },
+                "visible": {
+                    "type": "boolean",
+                    "description": "Specify whether the service could be seen in CSP portal"
+                },
+                "subscriptionLifecycleEventHandlers": {
+                    "description": "Event handlers used during subscription lifecycle events",
+                    "$ref": "#/definitions/SubscriptionLifecycleEventHandlersDTO"
+                },
+                "serviceUrls": {
+                    "description": "Service urls to be used by CSP",
+                    "$ref": "#/definitions/ServiceUrlsDto"
+                },
+                "serviceRoles": {
+                    "type": "array",
+                    "description": "Service Level Roles",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRoleDto"
+                    }
+                },
+                "organizationLink": {
+                    "type": "string",
+                    "description": "The organization self link"
+                },
+                "documentSelfLink": {
+                    "type": "string",
+                    "description": "The service definition self link"
+                },
+                "healthCheckURL": {
+                    "type": "string",
+                    "description": "The health check relative url of the service"
+                },
+                "campaignId": {
+                    "type": "string",
+                    "description": "The marketing campaign ID for the service"
+                },
+                "serviceIcon": {
+                    "type": "string",
+                    "description": "The service icon URL"
+                },
+                "serviceNavBarIcon": {
+                    "type": "string",
+                    "description": "The service nav bar icon URL"
+                },
+                "subscriptionStatusChangeNotificationUrl": {
+                    "type": "string",
+                    "description": "Subscription status change notification URL"
+                },
+                "gated": {
+                    "type": "boolean"
+                }
+            },
+            "description": "The model of an external service definition"
+        },
+        "ServiceRoleDto": {
+            "type": "object",
+            "properties": {
+                "refLink": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "IN_DELETION_PROCESS",
+                        "ACTIVE"
+                    ]
+                },
+                "isDefault": {
+                    "type": "boolean"
+                },
+                "isHidden": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ServiceUrlsDto": {
+            "type": "object",
+            "properties": {
+                "termsOfService": {
+                    "type": "string"
+                },
+                "offerConfiguration": {
+                    "type": "string"
+                },
+                "serviceHome": {
+                    "type": "string"
+                },
+                "requestAccess": {
+                    "type": "string"
+                }
+            }
+        },
+        "SubscriptionLifecycleEventHandlersDTO": {
+            "type": "object",
+            "properties": {
+                "onFulfillment": {
+                    "type": "string",
+                    "description": "Subscription Fulfillment event callback Uri"
+                },
+                "onExpiration": {
+                    "type": "string",
+                    "description": "Subscription Expiration event callback Uri"
+                },
+                "onCancellation": {
+                    "type": "string",
+                    "description": "Subscription Cancellation event callback Uri"
+                }
+            },
+            "description": "Event handlers used during subscription lifecycle events"
+        },
+        "ServiceDefinitionUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "subscriptionLifecycleEventHandlers": {
+                    "description": "Subscription lifecycle event handlers",
+                    "$ref": "#/definitions/SubscriptionLifecycleEventHandlers"
+                },
+                "serviceUrls": {
+                    "description": "Service Urls",
+                    "$ref": "#/definitions/ServiceUrls"
+                },
+                "serviceRoles": {
+                    "type": "array",
+                    "description": "Service roles update default",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRoleUpdateDto"
+                    }
+                },
+                "visible": {
+                    "type": "boolean",
+                    "description": "Determine whether the service is visible or not"
+                },
+                "campaignId": {
+                    "type": "string",
+                    "description": "Marketing Campaign ID for the service"
+                },
+                "displayName": {
+                    "type": "string",
+                    "description": "Service display name"
+                },
+                "descriptionShort": {
+                    "type": "string",
+                    "description": "Short description of service"
+                },
+                "descriptionLong": {
+                    "type": "string",
+                    "description": "Longer description of the service"
+                },
+                "productIdentifier": {
+                    "type": "string",
+                    "description": "The product identifier in the Billing Provider"
+                },
+                "serviceIcon": {
+                    "type": "string",
+                    "description": "The service icon URL"
+                },
+                "serviceNavBarIcon": {
+                    "type": "string",
+                    "description": "The service nav bar icon URL"
+                },
+                "subscriptionStatusChangeNotificationUrl": {
+                    "type": "string",
+                    "description": "Subscription status change notification URL"
+                },
+                "gated": {
+                    "type": "boolean"
+                }
+            },
+            "description": "Service definition update request"
+        },
+        "ServiceRoleUpdateDto": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "isDefault": {
+                    "type": "boolean"
+                },
+                "isHidden": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ServiceUrls": {
+            "type": "object",
+            "properties": {
+                "termsOfService": {
+                    "type": "string",
+                    "description": "Terms of service url"
+                },
+                "offerConfiguration": {
+                    "type": "string",
+                    "description": "Offer configuration url"
+                },
+                "serviceHome": {
+                    "type": "string",
+                    "description": "Service Home"
+                },
+                "requestAccess": {
+                    "type": "string",
+                    "description": "Request access marketing form url"
+                }
+            },
+            "description": "Service urls to be used by CSP"
+        },
+        "SubscriptionLifecycleEventHandlers": {
+            "type": "object",
+            "properties": {
+                "onFulfillment": {
+                    "type": "string",
+                    "description": "Subscription Fulfillment event callback Uri"
+                },
+                "onExpiration": {
+                    "type": "string",
+                    "description": "Subscription Expiration event callback Uri"
+                },
+                "onCancellation": {
+                    "type": "string",
+                    "description": "Subscription Cancellation event callback Uri"
+                }
+            },
+            "description": "Event handlers used during subscription lifecycle events"
+        },
+        "AllServiceDefinitionsResponse": {
+            "type": "object",
+            "properties": {
+                "serviceDefinitionLinks": {
+                    "type": "array",
+                    "description": "Links to individual service definitions",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceDefinitionsDto"
+                    }
+                }
+            },
+            "description": "All service definitions - internal and external"
+        },
+        "ServiceDefinitionsDto": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "healthCheckURL": {
+                    "type": "string"
+                },
+                "documentSelfLink": {
+                    "type": "string"
+                },
+                "serviceUrls": {
+                    "$ref": "#/definitions/ServiceUrlsDto"
+                },
+                "descriptionShort": {
+                    "type": "string"
+                },
+                "descriptionLong": {
+                    "type": "string"
+                },
+                "serviceRoles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRole"
+                    }
+                },
+                "campaignId": {
+                    "type": "string"
+                },
+                "visible": {
+                    "type": "boolean"
+                },
+                "orgId": {
+                    "type": "string"
+                },
+                "serviceIcon": {
+                    "type": "string"
+                },
+                "serviceNavBarIcon": {
+                    "type": "string"
+                },
+                "productIdentifier": {
+                    "type": "string"
+                },
+                "subscriptionStatusChangeNotificationUrl": {
+                    "type": "string"
+                },
+                "gated": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ServiceRole": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Role name"
+                },
+                "displayName": {
+                    "type": "string",
+                    "description": "Role display name"
+                },
+                "isDefault": {
+                    "type": "boolean",
+                    "description": "Is default role"
+                },
+                "isHidden": {
+                    "type": "boolean",
+                    "description": "Is hidden role"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Role Status",
+                    "readOnly": true,
+                    "enum": [
+                        "IN_DELETION_PROCESS",
+                        "ACTIVE"
+                    ]
+                }
+            }
+        },
+        "ServiceRolesResponse": {
+            "type": "object",
+            "properties": {
+                "refLinks": {
+                    "type": "array",
+                    "description": "Links of references",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "serviceRoles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRoleDto"
+                    }
+                }
+            }
+        },
+        "ServiceRoleDeletionTaskResponse": {
+            "type": "object",
+            "properties": {
+                "taskStage": {
+                    "type": "string"
+                },
+                "taskSubStage": {
+                    "type": "string"
+                },
+                "serviceDefinitionLink": {
+                    "type": "string"
+                },
+                "serviceRoleName": {
+                    "type": "string"
+                },
+                "failureMessage": {
+                    "type": "string"
+                },
+                "retryCount": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "subscribedOrganizationsToHandle": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Service Roles Deletion task state"
+        },
+        "RefLinksDto": {
+            "type": "object",
+            "properties": {
+                "refLinks": {
+                    "type": "array",
+                    "description": "Links of references",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "ServiceMetadataPaginatedResponse": {
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceMetadataResponse"
+                    }
+                },
+                "nextToken": {
+                    "type": "string"
+                },
+                "prevToken": {
+                    "type": "string"
+                },
+                "totalResults": {
+                    "type": "string"
+                }
+            }
+        },
+        "ServiceMetadataResponse": {
+            "type": "object",
+            "properties": {
+                "refLink": {
+                    "type": "string",
+                    "description": "reference link"
+                },
+                "metadata": {
+                    "type": "object",
+                    "description": "Service organization metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Service metadata at organization level"
+        },
+        "User": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "description": "First Name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "Last Name"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "Username"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password"
+                },
+                "refLink": {
+                    "type": "string",
+                    "description": "Document Ref Link"
+                },
+                "address": {
+                    "type": "string",
+                    "description": "Address"
+                },
+                "city": {
+                    "type": "string",
+                    "description": "City"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "State"
+                },
+                "country": {
+                    "type": "string",
+                    "description": "Country"
+                },
+                "zipcode": {
+                    "type": "string",
+                    "description": "Zip Code"
+                },
+                "tradeId": {
+                    "type": "string",
+                    "description": "Trade Id"
+                },
+                "company": {
+                    "type": "string",
+                    "description": "Company"
+                },
+                "workPhone": {
+                    "type": "string",
+                    "description": "workPhone"
+                },
+                "website": {
+                    "type": "string",
+                    "description": "Website"
+                },
+                "emailVerified": {
+                    "type": "boolean",
+                    "description": "Email Verified"
+                },
+                "eulaInfo": {
+                    "type": "string",
+                    "description": "Eula Info"
+                },
+                "tnc": {
+                    "type": "boolean",
+                    "description": "Tnc"
+                },
+                "customerNumber": {
+                    "type": "string",
+                    "description": "Customer Number"
+                }
+            }
+        },
+        "Organization": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name",
+                    "readOnly": true
+                },
+                "displayName": {
+                    "type": "string",
+                    "description": "Display name"
+                },
+                "refLink": {
+                    "type": "string",
+                    "description": "Document Ref Link"
+                }
+            }
+        },
+        "Organizations": {
+            "type": "object",
+            "properties": {
+                "refLinks": {
+                    "type": "array",
+                    "description": "Links of references",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Organization"
+                    }
+                }
+            }
+        },
+        "RoleDto": {
+            "type": "object",
+            "properties": {
+                "refLink": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "organizationLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "ServiceRolesDto": {
+            "type": "object",
+            "properties": {
+                "serviceDefinitionLink": {
+                    "type": "string"
+                },
+                "serviceRoleNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "UserServiceRolesResponse": {
+            "type": "object",
+            "properties": {
+                "serviceRoles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRolesDto"
+                    }
+                }
+            }
+        },
+        "AccessKey": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "description": "Access key"
+                }
+            },
+            "description": "CSP access key"
+        },
+        "ServiceDef": {
+            "type": "object",
+            "properties": {
+                "serviceName": {
+                    "type": "string"
+                },
+                "serviceDisplayName": {
+                    "type": "string"
+                },
+                "serviceRoles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "refLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserInfo": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/User"
+                },
+                "userOrgInfo": {
+                    "type": "array",
+                    "description": "Organization and services roles",
+                    "items": {
+                        "$ref": "#/definitions/UserOrgInfo"
+                    }
+                }
+            },
+            "description": "User Info"
+        },
+        "UserOrgInfo": {
+            "type": "object",
+            "properties": {
+                "orgRoles": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/definitions/RoleDto"
+                    }
+                },
+                "servicesDef": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceDef"
+                    }
+                }
+            }
+        },
+        "AccessToken": {
+            "type": "object",
+            "properties": {
+                "scope": {
+                    "type": "string",
+                    "description": "Scope"
+                },
+                "access_token": {
+                    "type": "string",
+                    "description": "Access Token"
+                },
+                "refresh_token": {
+                    "type": "string",
+                    "description": "Refresh Token"
+                },
+                "id_token": {
+                    "type": "string",
+                    "description": "ID Token"
+                },
+                "token_type": {
+                    "type": "string",
+                    "description": "Token Type"
+                },
+                "expires_in": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Access Token Expiration"
+                }
+            },
+            "description": "Access token"
+        },
+        "ServiceInvitationResponse": {
+            "type": "object",
+            "properties": {
+                "invitationLink": {
+                    "type": "string"
+                },
+                "serviceDefinitionLink": {
+                    "type": "string"
+                },
+                "expirationTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "AVAILABLE",
+                        "REDEEMED",
+                        "EXPIRED"
+                    ]
+                },
+                "tosSignedBy": {
+                    "type": "string"
+                },
+                "context": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "orgLink": {
+                    "type": "string"
+                },
+                "isFundMandatory": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Service Invitation Request": {
+            "type": "object",
+            "properties": {
+                "serviceDefinitionLink": {
+                    "type": "string",
+                    "description": "Service definition link",
+                    "pattern": "^(/csp/slc/api/definitions/internal|/csp/slc/api/definitions/external)/[^/]+$"
+                },
+                "numberOfInvitationsToGenerate": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of invitations to generate. If not supplied, one invitation will be generated."
+                },
+                "context": {
+                    "type": "object",
+                    "description": "The context passed to the service upon fulfillment request",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "isFundMandatory": {
+                    "type": "boolean",
+                    "description": "If true and the invited user's org has no fund, the fund of the user will be associated with the org."
+                }
+            }
+        },
+        "UserRolesUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "roleNamesToAdd": {
+                    "type": "array",
+                    "description": "Role names to add",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleNamesToRemove": {
+                    "type": "array",
+                    "description": "Role names to remove",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "UserServiceRolesUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "serviceDefinitionLink": {
+                    "type": "string",
+                    "pattern": "^(/csp/slc/api/definitions/internal|/csp/slc/api/definitions/external)/[^/]+$"
+                },
+                "roleNamesToRemove": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleNamesToAdd": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "AuthClient": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Auth Client ID"
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "Auth Client Secret"
+                },
+                "redirectUris": {
+                    "type": "array",
+                    "description": "Auth Client service redirect URIs",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "redirectUri": {
+                    "type": "string",
+                    "description": "(DEPRECATED) Auth Client service redirect URI"
+                },
+                "refLink": {
+                    "type": "string",
+                    "description": "Auth Client link"
+                },
+                "grantTypes": {
+                    "type": "array",
+                    "description": "OAuth Grant types",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "accessTokenTTL": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "OAuth Access token TTL"
+                },
+                "refreshTokenTTL": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "OAuth Refresh token TTL"
+                },
+                "resourceLink": {
+                    "type": "string",
+                    "description": "Resource Link"
+                },
+                "allowedScopes": {
+                    "type": "array",
+                    "description": "Allowed Scopes",
+                    "readOnly": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "UpdateClientsScopesRequest": {
+            "type": "object",
+            "properties": {
+                "scopesToAdd": {
+                    "type": "array",
+                    "description": "Scopes to add",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "scopesToRemove": {
+                    "type": "array",
+                    "description": "Scopes to remove",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "serviceDefinitionLink": {
+                    "type": "string",
+                    "description": "Service definition link",
+                    "pattern": "^(/csp/slc/api/definitions/internal|/csp/slc/api/definitions/external)/[^/]+$"
+                }
+            }
+        },
+        "HealthCheckDto": {
+            "type": "object",
+            "properties": {
+                "healthCheckType": {
+                    "type": "string",
+                    "description": "The health check type (HTTP/TCP) of the element",
+                    "enum": [
+                        "TCP",
+                        "HTTP"
+                    ]
+                },
+                "healthCheckURL": {
+                    "type": "string",
+                    "description": "The health check relative url of the element"
+                }
+            },
+            "description": "HealthCheck DTO"
+        },
+        "RegisteredServiceRecordResponse": {
+            "type": "object",
+            "properties": {
+                "serviceName": {
+                    "type": "string",
+                    "description": "The name of this service instance"
+                },
+                "serviceDefinitionLink": {
+                    "type": "string",
+                    "description": "The service definition for this service"
+                },
+                "refLink": {
+                    "type": "string",
+                    "description": "The link to this service"
+                },
+                "publicUrl": {
+                    "type": "string",
+                    "description": "Public url"
+                },
+                "healthCheck": {
+                    "description": "The health check paths and type",
+                    "$ref": "#/definitions/HealthCheckDto"
+                }
+            },
+            "description": "The model of a service instance registered with CSP"
+        },
+        "IDPOrganization": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "refLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "PublicKeyDto": {
+            "type": "object",
+            "properties": {
+                "alg": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "issuer": {
+                    "type": "string"
+                }
+            }
+        },
+        "Token": {
+            "type": "object",
+            "properties": {
+                "cspAuthToken": {
+                    "type": "string",
+                    "description": "JWT Token"
+                }
+            },
+            "description": "JWT token"
+        },
+        "UrlResponse": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "Url"
+                }
+            },
+            "description": "IDP Url Response"
+        },
+        "IdTokenDto": {
+            "type": "object",
+            "properties": {
+                "idToken": {
+                    "type": "string",
+                    "description": "ID Token"
+                }
+            },
+            "description": "ID Token"
+        },
+        "OrganizationCreationRequest": {
+            "type": "object",
+            "properties": {
+                "displayName": {
+                    "type": "string",
+                    "description": "Display name"
+                }
+            }
+        },
+        "RoleDisplayDto": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Role Name"
+                },
+                "displayName": {
+                    "type": "string",
+                    "description": "Role Display Name"
+                }
+            }
+        },
+        "UserAndRoles": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName",
+                "organizationRoles",
+                "username"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "description": "Username"
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "First Name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "Last Name"
+                },
+                "organizationRoles": {
+                    "type": "array",
+                    "description": "Organization Roles",
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/definitions/RoleDisplayDto"
+                    }
+                }
+            }
+        },
+        "Users": {
+            "type": "object",
+            "required": [
+                "refLinks",
+                "users"
+            ],
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "description": "Users",
+                    "items": {
+                        "$ref": "#/definitions/UserAndRoles"
+                    }
+                },
+                "refLinks": {
+                    "type": "array",
+                    "description": "Document Reference Links",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "OrgRolesResponse": {
+            "type": "object",
+            "properties": {
+                "refLinks": {
+                    "type": "array",
+                    "description": "Links of references",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "orgRolesData": {
+                    "type": "array",
+                    "description": "Organization roles details",
+                    "items": {
+                        "$ref": "#/definitions/RoleDto"
+                    }
+                }
+            }
+        },
+        "UpdateOrgUsernamesResponse": {
+            "type": "object",
+            "properties": {
+                "succeeded": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "failed": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "RemoveUserFromOrgRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "Email (Deprecated)"
+                },
+                "emails": {
+                    "type": "array",
+                    "description": "Emails",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "User Invitation Response": {
+            "type": "object",
+            "required": [
+                "username"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "description": "Username"
+                },
+                "orgRoleName": {
+                    "type": "string",
+                    "description": "Org role name"
+                },
+                "orgRoleNames": {
+                    "type": "array",
+                    "description": "Org roles name",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "serviceRolesDtos": {
+                    "type": "array",
+                    "description": "Service Roles",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRolesDto"
+                    }
+                },
+                "invitationLink": {
+                    "type": "string",
+                    "description": "Common Invitation Link"
+                },
+                "refLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "Users Invitation Request": {
+            "type": "object",
+            "required": [
+                "usernames"
+            ],
+            "properties": {
+                "usernames": {
+                    "type": "array",
+                    "description": "Usernames",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "orgRoleName": {
+                    "type": "string",
+                    "description": "Org role name (deprecated, use orgRoleNames instead)"
+                },
+                "orgRoleNames": {
+                    "type": "array",
+                    "description": "Org role names (relevant only for invite)",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "serviceRolesDtos": {
+                    "type": "array",
+                    "description": "Service Roles (relevant only for invite)",
+                    "items": {
+                        "$ref": "#/definitions/ServiceRolesDto"
+                    }
+                }
+            }
+        }
+    }
+}
